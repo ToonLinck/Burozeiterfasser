@@ -1,3 +1,33 @@
 ﻿@page "/"
+@using Bürozeiterfasser.Components
 
+<div id="bodydiv">
+    
+    <label>Ankuft:</label>
+    <input type="time" class="timeAnzeige" @bind="@workStart" @bind:event="oninput" onchange="@(async () => await UpdateWorktime())" />
+    <br />
+    <button onclick="@(() => { workStart = TimeZoneInfo.ConvertTime(DateTime.Now, getSelectedTimeZone()); StateHasChanged();})">jetzt</button>
+    <br />
 
+    <label>Errechnete Zeit:</label>
+    <input type="time" class="timeAnzeige" readonly @bind="@workEnd"/>
+    <br/>
+    
+    <h4>Angezielte Bürozeit</h4>
+    <label>Stunden</label>
+    <input type="number" max="24" @bind="@workTimeHour" @bind:event="oninput" onchange="(async () => await UpdateWorktime())" />
+    <br />
+    <label>Minuten</label>
+    <input type="number" max="60" @bind="@workTimeMinute" @bind:event="oninput" onchange="@(async () => await UpdateWorktime())" />
+    
+    <Countdown @ref="@coundownRef" WorkStart="@workStart" WorkEnd="workEnd" />
+
+    <br/>
+    <label>Zeitzone:</label>
+    <select name="Zeitzone auswählen" @bind="timeZoneSelected" @bind:event="oninput" onchange="@(async () => TimezoneChanged())">
+        <option value="cet" selected >Berlin CET</option>
+        <option value="est">NewYork EST</option>
+        <option value="jst">Tokyo JST</option>
+    </select>
+
+</div>
