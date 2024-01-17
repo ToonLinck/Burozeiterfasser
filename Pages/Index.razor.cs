@@ -28,29 +28,6 @@ namespace Bürozeiterfasser.Pages
             StateHasChanged();
         }
 
-        private async Task TimezoneChanged()
-        {
-            workStart = TimeZoneInfo.ConvertTime(workStart, getSelectedTimeZone());
-        }
 
-
-        private TimeZoneInfo getSelectedTimeZone()
-        {
-            switch(timeZoneSelected)
-            {
-                case "cet":
-                    return TimeZoneInfo.CreateCustomTimeZone("cet", new TimeSpan(1,0,0),"CET","Berlin");
-
-                case "est":
-                    return TimeZoneInfo.CreateCustomTimeZone("est", new TimeSpan(-5, 0, 0), "EST", "NewYork");
-
-                case "jst":
-                    return TimeZoneInfo.CreateCustomTimeZone("jst", new TimeSpan(9, 0, 0), "JST", "Tokyo");
-
-                default: return TimeZoneInfo.CreateCustomTimeZone("cet", new TimeSpan(1, 0, 0), "CET", "Berlin"); ;
-                    break;
-                    
-            }
-        }
     }
 }
